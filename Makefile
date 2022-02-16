@@ -10,7 +10,7 @@ FLAGS			=	 -Wall -Wextra -Werror -I $(INC_DIR) -I ./libft/
 # FLAGS           +=    -g -fsanitize=address
 
 .c.o        :
-				$(CC) $(FLAGS) -c -g $< -o $@
+				$(CC) $(FLAGS) -c $< -o $@
 
 all            :    $(NAME)
 
