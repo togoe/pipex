@@ -1,5 +1,11 @@
 #include "../inc/pipex.h"
 
+int ft_error_fd(int exi)
+{
+    printf("error fd assignation\n");
+    return(exi);
+}
+
 void    init_struct(t_var *vars)
 {
     vars->line_path = NULL;
@@ -64,22 +70,40 @@ void    ft_child_process(t_var *vars, char **av,char **env, char *cmd_av)
     {
         vars->fd_file = open(av[1], O_RDONLY);
         if (vars->fd_file < 0)
+        {
+            close(vars->pipefd[0]);
+            close(vars->pipefd[1]);
+            //ft_error_fd(-1);
             ft_error("An error occured:\nFile descriptor is not valid\n");
+        }
+            
         dup2(vars->fd_file, STDIN_FILENO);
         dup2(vars->pipefd[1], STDOUT_FILENO);
+        fprintf(stderr, "I am the left hand side\n");
     }
     if (vars->count == 1)
     {
         vars->fd_file = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
         if (vars->fd_file < 0)
+        {
+            close(vars->pipefd[0]);
+            close(vars->pipefd[1]);
+            //ft_error_fd(-1);
             ft_error("An error occured:\nFile descriptor is not valid\n");
+        }
+            
         dup2(vars->pipefd[0], STDIN_FILENO);
         dup2(vars->fd_file, STDOUT_FILENO);
+        fprintf(stderr, "I am the right hand side\n");
     }
+    if (vars->fd_file >= 0)
+    {
         close(vars->pipefd[0]);
         close(vars->pipefd[1]);
         close(vars->fd_file);
         ft_execute(vars, cmd_av, env);
+    }
+    
 }
 
 void ft_pipe(t_var *vars, char **av, char **env, int ac)
