@@ -73,7 +73,6 @@ void    ft_child_process(t_var *vars, char **av,char **env, char *cmd_av)
         {
             close(vars->pipefd[0]);
             close(vars->pipefd[1]);
-            //ft_error_fd(-1);
             ft_error("An error occured:\nFile descriptor is not valid\n");
         }
             
@@ -88,7 +87,6 @@ void    ft_child_process(t_var *vars, char **av,char **env, char *cmd_av)
         {
             close(vars->pipefd[0]);
             close(vars->pipefd[1]);
-            //ft_error_fd(-1);
             ft_error("An error occured:\nFile descriptor is not valid\n");
         }
             
