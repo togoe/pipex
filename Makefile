@@ -29,3 +29,5 @@ fclean        :    clean
 			@echo "[$(NAME)]: Deleted"
 
 re            :    fclean all
+
+.PHONY: all clean fclean re

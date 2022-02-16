@@ -19,10 +19,10 @@ void    ft_extract_path(t_var *vars, char **env)
     while (env[i] && ft_strncmp(env[i], "PATH=", 5))
         i++;
     if (!env[i])
-        ft_error("PATH variable not found");
+        ft_error("PATH variable not found\n");
     vars->extract_path = ft_split(env[i] + 5, ':');
     if (!vars->extract_path)
-        ft_error("Error allocation extract_path\n");
+        ft_error_alloc("Error allocation extract_path\n", vars);
     i = 0;
     while (vars->extract_path[i])
         i++;
@@ -38,10 +38,10 @@ void    ft_execute(t_var *vars, char *cmd_av, char **env)
 {
     int i;
 
-    ft_extract_path(vars, env);
     vars->cmd = ft_split(cmd_av, ' ');
     if (!access(cmd_av, X_OK))
         execve(cmd_av, vars->cmd, env);
+    ft_extract_path(vars, env);
     i = -1;
     
     while (vars->path_join[++i])

@@ -1,0 +1,23 @@
+
+Case 0:
+    If the commandline is:
+        ./pipex infile 'cat -e' 'cat -e' outfile
+    And If outfile has no WritePermission, then
+        leaks occure, and fd leaks occure
+
+    If same commandline And infile has no ReadPermission, then
+        fd leaks occure
+    
+    HowToFix:
+        open both files (infile and outfile) in the parent process, and call
+        fork() ONLY IF both have succeed
+
+Case 1:
+    If the commandline is:
+        ./pipex infile '/usr/bin/cat -e' '/usr/bin/cat -e' outfile
+    And If PATH is unset, then
+        the commands are not found/run and a "PATH not found" message appears instead
+
+    HowToFix:
+        proceed to extract_path after trying to execute directly (absolute path to cmd only !)
+        Don't forget to free the ft_split result after !

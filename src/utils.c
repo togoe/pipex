@@ -18,8 +18,13 @@ void ft_free_tab(char **tab)
 
 void	ft_error_alloc(char *str, t_var *vars)
 {
+	if (!vars->extract_path)
+		ft_free_tab(vars->cmd);
 	if (!vars->path_join)
+	{
 		ft_free_tab(vars->extract_path);
+		ft_free_tab(vars->cmd);
+	}
 	else if (!vars->cmd)
 	{
 		ft_free_tab(vars->path_join);
