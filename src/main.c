@@ -20,12 +20,9 @@ void    ft_extract_path(t_var *vars, char **env)
         i++;
     if (!env[i])
         ft_error("PATH variable not found");
-    vars->line_path = ft_substr(env[i], 5, ft_strlen(env[i]) - 5);
-    if (!vars->line_path)
-        ft_error_alloc("Fail allocation PATH not found\n", vars);
-    //vars->extract_path = ft_split(vars->line_path, ':');
+    vars->extract_path = ft_split(env[i] + 5, ':');
     if (!vars->extract_path)
-        ft_error_alloc("Error allocation extract_path\n", vars);
+        ft_error("Error allocation extract_path\n");
     i = 0;
     while (vars->extract_path[i])
         i++;
@@ -41,14 +38,17 @@ void    ft_execute(t_var *vars, char *cmd_av, char **env)
 {
     int i;
 
+    ft_extract_path(vars, env);
     vars->cmd = ft_split(cmd_av, ' ');
     if (!access(cmd_av, X_OK))
         execve(cmd_av, vars->cmd, env);
     i = -1;
-    ft_extract_path(vars, env);
+    
     while (vars->path_join[++i])
     {
         vars->path_join_cmd = ft_strjoin(vars->path_join[i], vars->cmd[0]);
+        if (!vars->path_join_cmd)
+            ft_error_alloc("Error allocation path_join_cmd/\n", vars);
         if (!access(vars->path_join_cmd, X_OK))
             execve(vars->path_join_cmd, vars->cmd, env);
         free(vars->path_join[i]);
