@@ -6,7 +6,7 @@
 /*   By: ctogoe <ctogoe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 23:17:46 by ctogoe            #+#    #+#             */
-/*   Updated: 2020/07/05 00:13:37 by ctogoe           ###   ########.fr       */
+/*   Updated: 2022/02/16 10:44:48 by ctogoe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-typedef struct		s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;

@@ -1,20 +1,19 @@
 NAME            =    pipex
 SRC_DIR            =    ./src/
 INC_DIR            =    ./inc/
-SRCS            =    main.c utils.c
+SRCS            =    main.c utils.c ft_err.c
                     
 SRC_BASENAME    =    $(addprefix $(SRC_DIR), $(SRCS))        
 OBJS            =    $(SRC_BASENAME:.c=.o)
 CC              =    clang
 FLAGS			=	 -Wall -Wextra -Werror -I $(INC_DIR) -I ./libft/
-# FLAGS           +=    -g -fsanitize=address
 
-.c.o        :
+
+all				:    $(NAME)
+.c.o			:
 				$(CC) $(FLAGS) -c $< -o $@
 
-all            :    $(NAME)
-
-$(NAME)        :    $(OBJS)
+$(NAME)			:    $(OBJS)
 			make -C ./libft/
 			$(CC) $(FLAGS) -o $(NAME) $(OBJS) -L./libft/ -lft
 			@echo [$(NAME)] : Created !
